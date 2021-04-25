@@ -9,6 +9,7 @@ require('dotenv').config()
 const session = require('express-session')
 const flash = require('express-flash')
 const MongoDbStore = require('connect-mongo')(session)
+const passport = require('passport')
 
 
 // Database Connection
@@ -27,6 +28,8 @@ const conctString = process.env.DATABASE_CONNECTION
         console.log(error)
         process.exit(1)
     }
+
+
 // sesssion store
 
 let mongoStore = new MongoDbStore({
@@ -45,6 +48,14 @@ app.use(session({
 }))
 
 
+// Passport Config
+  
+const passportConfig = require('./app/config/passport')
+ passportConfig(passport)
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 app.use(flash())
 
 //Assets used
@@ -53,7 +64,7 @@ app.use(express.static('public'))
 // Global Midlleware
    app.use((req,res,next) =>{
        res.locals.session = req.session
-
+      res.locals.user = req.user
        next()
    })
 
@@ -62,6 +73,7 @@ app.use(expressLayout)
 app.set('views', path.join(__dirname, '/resources/views'))
 app.set('view engine', 'ejs')
 
+app.use(express.urlencoded({ extended: false}))
 app.use(express.json())
 
  require('./routes/web')(app)
