@@ -1,9 +1,9 @@
 {
   "name": "realtime-pizza",
   "version": "1.0.0",
-  "description": "This is our relatime pizza app",
+  "description": "Real Time Pizza Delivery APP",
   "main": "index.js",
-  "author": "Coder's Gyan",
+  "author": "Asmar Munir",
   "scripts": {
     "serve": "node server.js",
     "dev": "nodemon server.js",
