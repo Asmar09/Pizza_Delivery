@@ -23,9 +23,9 @@ function orderController () {
                     // Stripe payment
                     if(paymentType === 'card') {
                         stripe.charges.create({
-                            amount: req.session.cart.totalPrice,
+                            amount: req.session.cart.totalPrice  * 100,
                             source: stripeToken,
-                            currency: 'usd',
+                            currency: 'inr',
                             description: `Pizza order: ${placedOrder._id}`
                         }).then(() => {
                             placedOrder.paymentStatus = true
